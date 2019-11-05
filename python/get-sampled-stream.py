@@ -56,9 +56,3 @@ bearer_token = BearerTokenAuth(CONSUMER_KEY, CONSUMER_SECRET)
 # Listen to the stream. This reconnection logic will attempt to reconnect as soon as a disconnection is detected.
 while True:
     stream_connect(bearer_token)
-
-
-
-#parsed = json.loads(response.text)
-#pretty_print = json.dumps(parsed, indent=2, sort_keys=True)
-#print (pretty_print)
