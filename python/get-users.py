@@ -37,7 +37,7 @@ class BearerTokenAuth(AuthBase):
             self.bearer_token_url,
             auth=(self.consumer_key, self.consumer_secret),
             data={'grant_type': 'client_credentials'},
-            headers={'User-Agent': 'TwitterDevRecentSearxhStreamQuickStartPython'})
+            headers={'User-Agent': 'TwitterDevGetUsersQuickStartPython'})
 
         if response.status_code is not 200:
             raise Exception(f"Cannot get a Bearer token (HTTP %d): %s" % (response.status_code, response.text))

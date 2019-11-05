@@ -20,7 +20,7 @@ rules_url = "https://api.twitter.com/labs/1/tweets/stream/filter/rules"
 
 sample_rules = [
     { 'value': 'snow has:videos', 'tag': 'snow videos' },
-    { 'value': 'hail has:images', 'tag': 'hail photos' },
+    { 'value': 'rain has:images', 'tag': 'rain photos' },
 ]
 
 headers = {
@@ -40,7 +40,7 @@ class BearerTokenAuth(AuthBase):
             self.bearer_token_url,
             auth=(self.consumer_key, self.consumer_secret),
             data={'grant_type': 'client_credentials'},
-            headers={'User-Agent': 'TwitterDevRecentSearxhStreamQuickStartPython'})
+            headers={'User-Agent': 'TwitterDevFilteredStreamQuickStartPython'})
 
         if response.status_code is not 200:
             raise Exception(f"Cannot get a Bearer token (HTTP %d): %s" % (response.status_code, response.text))
