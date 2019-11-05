@@ -74,7 +74,7 @@ def get_users(auth):
 options = "&format=compact"
 bearer_token = BearerTokenAuth(CONSUMER_KEY, CONSUMER_SECRET)
 
-response = get_tweets(bearer_token)
+response = get_users(bearer_token)
 
 parsed = json.loads(response.text)
 pretty_print = json.dumps(parsed, indent=2, sort_keys=True)
