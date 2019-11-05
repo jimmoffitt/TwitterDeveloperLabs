@@ -17,6 +17,13 @@ headers = {
     "Accept-Encoding": "gzip"
 }
 
+# Argparse for cli options. Run `python engagement_totals.py -h` to see list of available arguments.
+parser = argparse.ArgumentParser()
+parser.add_argument("-t", "--tweet_ids", nargs='+', required=True,
+                    help="Enter one or more comma delimited Tweet IDs (for example: `-t '123,456'`)")
+
+args = parser.parse_args()
+
 # Gets a bearer token
 class BearerTokenAuth(AuthBase):
     def __init__(self, consumer_key, consumer_secret):
@@ -46,7 +53,7 @@ class BearerTokenAuth(AuthBase):
 
 def get_tweets(auth):
 
-    url = f"https://api.twitter.com/labs/1/tweets?ids={ids}{options}"
+    url = f"https://api.twitter.com/labs/1/tweets?ids={args.tweet_ids[0]}{options}"
     response = requests.get(url, auth=auth, headers = headers)
 
     if response.status_code is not 200:
@@ -54,7 +61,6 @@ def get_tweets(auth):
 
     return response
 
-ids = "1189360732753793024,1186045618340237312"
 options = "&format=compact"
 bearer_token = BearerTokenAuth(CONSUMER_KEY, CONSUMER_SECRET)
 
