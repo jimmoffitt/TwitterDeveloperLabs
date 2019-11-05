@@ -1,9 +1,8 @@
-import argparse
 import json
 import os
-import urllib.parse
 import requests
 from requests.auth import AuthBase
+from pprint import pprint
 
 from dotenv import load_dotenv
 load_dotenv(verbose=True)  # Throws error if it can't find .env file
@@ -13,16 +12,12 @@ load_dotenv(verbose=True)  # Throws error if it can't find .env file
 CONSUMER_KEY = os.getenv("TWITTER_CONSUMER_KEY")
 CONSUMER_SECRET = os.getenv("TWITTER_CONSUMER_SECRET")
 
+options = "&format=default"
+stream_url = "https://api.twitter.com/labs/1/tweets/stream/sample"
+
 headers = {
     "Accept-Encoding": "gzip"
 }
-
-# Argparse for cli options. Run `python engagement_totals.py -h` to see list of available arguments.
-parser = argparse.ArgumentParser()
-parser.add_argument("-u", "--users", nargs='+', required=True,
-                    help="Enter one or more comma delimited user names or IDs (for example: `-u 'snowman,twitterdev'` or `-u '17200003,2244994945'`)")
-
-args = parser.parse_args()
 
 # Gets a bearer token
 class BearerTokenAuth(AuthBase):
@@ -50,32 +45,20 @@ class BearerTokenAuth(AuthBase):
         r.headers['User-Agent'] = 'TwitterDevFilteredStreamQuickStartPython'
         return r
 
+def stream_connect(auth):
+    response = requests.get(stream_url, auth=auth, headers={"User-Agent": "TwitterDevSampledStreamQuickStartPython"}, stream=True)
+    for response_line in response.iter_lines():
+        if response_line:
+            pprint(json.loads(response_line))
 
-def get_users(auth):
-
-    user_list = args.users[0].split(',')
-    if user_list[0].isnumeric():
-        using_ids = True
-    else:
-        using_ids = False
-    
-    if using_ids:
-        url = f"https://api.twitter.com/labs/1/users?ids={args.users[0]}{options}"
-    else:
-        url = f"https://api.twitter.com/labs/1/users?usernames={args.users[0]}{options}"
-        
-    response = requests.get(url, auth=auth, headers = headers)
-
-    if response.status_code is not 200:
-        raise Exception(f"Cannot get rules (HTTP %d): %s" % (response.status_code, response.text))
-
-    return response
-
-options = "&format=default"
 bearer_token = BearerTokenAuth(CONSUMER_KEY, CONSUMER_SECRET)
 
-response = get_users(bearer_token)
+# Listen to the stream. This reconnection logic will attempt to reconnect as soon as a disconnection is detected.
+while True:
+    stream_connect(bearer_token)
 
-parsed = json.loads(response.text)
-pretty_print = json.dumps(parsed, indent=2, sort_keys=True)
-print (pretty_print)
+
+
+#parsed = json.loads(response.text)
+#pretty_print = json.dumps(parsed, indent=2, sort_keys=True)
+#print (pretty_print)
