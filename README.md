@@ -16,9 +16,15 @@ Now that you havde access to Twitter Developer Labs, it time to start writing co
 
 ### Running Labs example scripts
 
-+ Clone this reposity.
-+ Update the .env file with your Twitter authentication tokens.
-+ Pick a script, perpare the command-line arguments, and run it. 
++ Clone this repository.
+
++ Running the Python scripts:
+  + Update the .env file with your Twitter authentication tokens.
+  + Pick a script, perpare the command-line arguments. This information could include Tweet IDs, User names and IDs, and querying for matching on Tweets of interest. 
+  + Run the script.
+ 
+ 
+
 
 
 
