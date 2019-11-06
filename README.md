@@ -24,15 +24,19 @@ Now that you havde access to Twitter Developer Labs, it time to start writing co
 + Running the Python scripts:
   + Update the .env file with your Twitter authentication tokens.
   + Pick a script, perpare the command-line arguments. This information could include Tweet IDs, User names and IDs, and queries for matching on Tweets of interest. 
-  + Run the script.
-  
-  + Sampled stream endpoint
+  + Run the script. E.g. ```$python3 get-users.py --users twitterdev,snowman```
   
   
-  + Get users endpoint
+##### Examples
+  
+  + **Sampled stream endpoint**
+  We will start with this endpoint since it is the most simple endpoint. It does not require any input or command-line parameters. To start a real-time stream that delivers 1% of Tweets (and seconds after being posted) just run the following:
+  ```$python3 get-sampled-stream.py```
+  
+  + **Get users endpoint**
   
   
-  + Get metrics endpoint
+  + **Get metrics endpoint**
   
  
  
